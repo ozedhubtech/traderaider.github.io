@@ -1,36 +1,61 @@
+/* Trade Raider - Professional Dashboard Styles */
+
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  background-color: #0e0e0e;
-  color: #fff;
-  text-align: center;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0d0d0d;
+    color: #eaeaea;
 }
 
-header {
-  background: #111;
-  padding: 20px 0;
-  font-size: 1.4rem;
-  border-bottom: 2px solid #00ff99;
+h1 {
+    text-align: center;
+    padding: 25px 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: #00d1ff;
+    letter-spacing: 1px;
 }
 
-#chart {
-  width: 90%;
-  height: 400px;
-  margin: 20px auto;
+#status {
+    font-weight: bold;
+    color: #ffcc00;
 }
 
-#signals {
-  background: #111;
-  padding: 20px;
-  margin: 20px auto;
-  width: 80%;
-  border-radius: 12px;
+#signal-box {
+    width: 90%;
+    max-width: 700px;
+    margin: 30px auto;
+    background: #1a1a1a;
+    border: 1px solid #222;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.15);
 }
 
-.signal-buy {
-  color: #00ff99;
+#signal-box h2 {
+    margin-top: 0;
+    color: #00d1ff;
+    font-size: 22px;
 }
 
-.signal-sell {
-  color: #ff0066;
+pre#signal {
+    background: #000;
+    color: #39ff14;
+    padding: 15px;
+    border-radius: 8px;
+    min-height: 100px;
+    font-size: 15px;
+    white-space: pre-wrap;
+    border: 1px solid #083d0c;
+}
+
+/* Mobile-friendly */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 26px;
+    }
+    #signal-box {
+        padding: 18px;
+    }
 }
