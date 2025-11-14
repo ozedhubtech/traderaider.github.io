@@ -59,3 +59,27 @@ pre#signal {
         padding: 18px;
     }
 }
+
+/* Back to Homepage Button */
+.back-btn-container {
+    text-align: center;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #00d1ff;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #00aacc;
+    color: #fff;
+}
+
