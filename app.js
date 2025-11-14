@@ -54,7 +54,6 @@ async function fetchSignal() {
             return;
         }
 
-        // The signal data is inside json.data (as saved in latest_signal.json)
         const signal = json.data;
 
         displaySignal({
@@ -62,7 +61,7 @@ async function fetchSignal() {
             side: signal.side,
             entry: parseFloat(signal.entry),
             stop_loss: parseFloat(signal.stop_loss),
-            take_profit: parseFloat(signal.take_profit) || "N/A", // if available
+            take_profit: parseFloat(signal.take_profit) || "N/A",
         });
         updateStatus("Last updated: " + new Date().toLocaleTimeString());
 
