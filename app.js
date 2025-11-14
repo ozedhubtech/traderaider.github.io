@@ -1,21 +1,14 @@
 // app.js - Trade Raider Dashboard Script
 
-// Example mock signal (replace with real API call later)
-const exampleSignal = {
-    symbol: "EUR/USD",
-    side: "Buy",
-    entry: 1.12345,
-    stop_loss: 1.12000,
-    take_profit: 1.13000,
-};
-
 // Function to display the signal in the <pre> block
 function displaySignal(signal) {
     const signalEl = document.getElementById("signal");
+
     if (!signal) {
         signalEl.textContent = "No signals received yet.";
         return;
     }
+
     const formatted = `
 📊 TRADE RAIDER SIGNAL
 
@@ -40,14 +33,16 @@ function initDashboard() {
     displaySignal(null);
 }
 
-// Simulate signal fetching (replace with fetch API call later)
+// Fetch latest signal from backend
 async function fetchSignal() {
     updateStatus("Fetching latest signal...");
-    try {
-        const response = await fetch("https://traderaider-app.onrender.com/latest-signal"
 
-);
+    try {
+        const response = await fetch("https://traderaider-app.onrender.com/latest_signal");
+        // FIXED: underscore (_) instead of dash (-)
+
         if (!response.ok) throw new Error("No signal available");
+
         const json = await response.json();
 
         if (json.error) {
@@ -65,6 +60,7 @@ async function fetchSignal() {
             stop_loss: parseFloat(signal.stop_loss),
             take_profit: parseFloat(signal.take_profit) || "N/A",
         });
+
         updateStatus("Last updated: " + new Date().toLocaleTimeString());
 
     } catch (err) {
@@ -77,7 +73,7 @@ async function fetchSignal() {
 // Auto refresh every 10 seconds
 setInterval(fetchSignal, 10000);
 
-// Run init on page load
+// Run when page loads
 window.onload = () => {
     initDashboard();
     fetchSignal();
