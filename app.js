@@ -44,7 +44,7 @@ function initDashboard() {
 async function fetchSignal() {
     updateStatus("Fetching latest signal...");
     try {
-       const response = await fetch("https://traderaider-app.onrender.com/latest-signal"
+        const response = await fetch("https://traderaider-app.onrender.com/latest-signal"
 
 );
         if (!response.ok) throw new Error("No signal available");
