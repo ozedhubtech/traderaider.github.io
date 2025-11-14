@@ -41,13 +41,36 @@ function initDashboard() {
 }
 
 // Simulate signal fetching (replace with fetch API call later)
-function fetchSignal() {
+async function fetchSignal() {
     updateStatus("Fetching latest signal...");
-    // Simulate network delay
-    setTimeout(() => {
-        displaySignal(exampleSignal);
+    try {
+        const response = await fetch("http://localhost:8000/latest-signal");
+        if (!response.ok) throw new Error("No signal available");
+        const json = await response.json();
+
+        if (json.error) {
+            displaySignal(null);
+            updateStatus(json.error);
+            return;
+        }
+
+        // The signal data is inside json.data (as saved in latest_signal.json)
+        const signal = json.data;
+
+        displaySignal({
+            symbol: signal.symbol,
+            side: signal.side,
+            entry: parseFloat(signal.entry),
+            stop_loss: parseFloat(signal.stop_loss),
+            take_profit: parseFloat(signal.take_profit) || "N/A", // if available
+        });
         updateStatus("Last updated: " + new Date().toLocaleTimeString());
-    }, 1500);
+
+    } catch (err) {
+        displaySignal(null);
+        updateStatus("Error fetching signal");
+        console.error(err);
+    }
 }
 
 // Auto refresh every 10 seconds
