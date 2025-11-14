@@ -1,6 +1,5 @@
 // app.js - Trade Raider Dashboard Script
 
-// Function to display the signal in the <pre> block
 function displaySignal(signal) {
     const signalEl = document.getElementById("signal");
 
@@ -18,62 +17,61 @@ function displaySignal(signal) {
 🛑 Stop Loss: ${signal.stop_loss}
 🎯 Take Profit: ${signal.take_profit}
     `;
+
     signalEl.textContent = formatted;
 }
 
-// Function to update status
 function updateStatus(text) {
-    const statusEl = document.getElementById("status");
-    statusEl.textContent = text;
+    document.getElementById("status").textContent = text;
 }
 
-// Initial setup
 function initDashboard() {
     updateStatus("Waiting for signals...");
     displaySignal(null);
 }
 
-// Fetch latest signal from backend
 async function fetchSignal() {
     updateStatus("Fetching latest signal...");
 
     try {
-        const response = await fetch("https://traderaider-app.onrender.com/latest_signal");
-        // FIXED: underscore (_) instead of dash (-)
+        const response = await fetch(
+            "https://traderaider-app.onrender.com/latest_signal"
+        );
 
-        if (!response.ok) throw new Error("No signal available");
+        if (!response.ok) {
+            updateStatus("No signal found");
+            displaySignal(null);
+            return;
+        }
 
         const json = await response.json();
 
         if (json.error) {
-            displaySignal(null);
             updateStatus(json.error);
+            displaySignal(null);
             return;
         }
 
-        const signal = json.data;
+        const s = json.data;
 
         displaySignal({
-            symbol: signal.symbol,
-            side: signal.side,
-            entry: parseFloat(signal.entry),
-            stop_loss: parseFloat(signal.stop_loss),
-            take_profit: parseFloat(signal.take_profit) || "N/A",
+            symbol: s.symbol,
+            side: s.side,
+            entry: s.entry,
+            stop_loss: s.stop_loss,
+            take_profit: s.take_profit,
         });
 
         updateStatus("Last updated: " + new Date().toLocaleTimeString());
 
     } catch (err) {
-        displaySignal(null);
         updateStatus("Error fetching signal");
         console.error(err);
     }
 }
 
-// Auto refresh every 10 seconds
 setInterval(fetchSignal, 10000);
 
-// Run when page loads
 window.onload = () => {
     initDashboard();
     fetchSignal();
